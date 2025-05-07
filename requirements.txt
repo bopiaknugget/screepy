@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+scrapy
+beautifulsoup4
+lxml
+crochet
+httpx
