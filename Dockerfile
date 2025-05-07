@@ -3,6 +3,10 @@ FROM python:3.10-slim
 
 # Create a user named 'appuser' without a password
 RUN adduser --disabled-password appuser
+
+# Set environment variable to include ~/.local/bin in PATH for appuser
+ENV PATH="/home/appuser/.local/bin:$PATH"
+
 # Switch to that user for all remaining instructions
 USER appuser
 
