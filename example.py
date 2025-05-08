@@ -1,25 +1,33 @@
+#!/usr/bin/env python3
+import json
 import requests
+import sys
 
-# URL ของ FastAPI ที่รันอยู่
 api_url = "http://localhost:8000/scrape"
 
-# รายการ URL ที่ต้องการ scrape
-data = {
+
+payload = {
     "urls": [
         "https://www.bbc.com/news"
     ]
 }
 
-# ส่ง HTTP POST ไปที่ API
-response = requests.post(api_url, json=data)
 
-# ตรวจสอบผลลัพธ์
-if response.status_code == 200:
-    for item in response.json():
-        print(f"URL: {item['url']}")
-        if item['content']:
-            print(f"Content (shortened): {item['content']}...\n")
-        else:
-            print(f"Error: {item['error']}\n")
-else:
-    print(f"Request failed with status {response.status_code}")
+headers = {
+    "X-API-Key": "tcIbPqAQySl0a1nCLka6caUSy7D3OnTqhqiK6MXssHk77F4I1P6QuWx3pgTbv7PQ",
+    "Content-Type": "application/json"
+}
+
+try:
+    response = requests.post( api_url, json=payload, timeout=10)
+    response.raise_for_status()
+except requests.RequestException as e:
+    print(f"Request failed: {e}")
+    sys.exit(1)
+
+
+try:
+    data = response.json()
+    print(json.dumps(data, indent=2, ensure_ascii=False))
+except ValueError:
+    print(response.text)
