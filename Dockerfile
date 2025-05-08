@@ -1,27 +1,29 @@
-# Use a lightweight Python base image
+# Dockerfile
+
+# 1) Base image
 FROM python:3.10-slim
 
-# Create a user named 'appuser' without a password
+# 2) Create non-root user
 RUN adduser --disabled-password appuser
 
-# Set environment variable to include ~/.local/bin in PATH for appuser
+# 3) Ensure pip-installed binaries are on PATH
 ENV PATH="/home/appuser/.local/bin:$PATH"
 
-# Switch to that user for all remaining instructions
+# 4) Switch to that user
 USER appuser
 
-# Set working directory inside container
+# 5) Set working dir
 WORKDIR /app
 
-# Copy dependency list and install them
+# 6) Install Python deps
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application code into the container
+# 7) Copy your app code
 COPY . .
 
-# Expose the application port
+# 8) Expose port
 EXPOSE 8000
 
-# Default command to run the FastAPI app with Uvicorn
-CMD ["uvicorn, "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# 9) Run Uvicorn properly (fixed quoting!)
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

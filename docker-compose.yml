@@ -1,0 +1,10 @@
+services:
+  web:
+    build: .
+    ports: ["8000:8000"]
+    secrets:             # grants container read-only access
+      - api_key
+
+secrets:
+  api_key:
+    file: ./API_KEY.txt
