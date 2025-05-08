@@ -19,14 +19,6 @@ headers = {
 }
 
 try:
-    response = requests.post( api_url, json=payload, timeout=10)
-    response.raise_for_status()
-except requests.RequestException as e:
-    print(f"Request failed: {e}")
-    sys.exit(1)
-
-
-try:
     data = response.json()
     print(json.dumps(data, indent=2, ensure_ascii=False))
 except ValueError:
