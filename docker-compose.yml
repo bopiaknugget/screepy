@@ -1,10 +1,11 @@
+version: "3.9"
+
 services:
   web:
     build: .
-    ports: ["8000:8000"]
-    secrets:             # grants container read-only access
-      - api_key
+    ports:
+      - "80:80"
+    # Bind-mount 
+    volumes:
+      - ./API_KEY.txt:/run/secrets/api_key:ro
 
-secrets:
-  api_key:
-    file: ./API_KEY.txt
