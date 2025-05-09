@@ -1,6 +1,6 @@
 import requests
 
-api_url = "http://localhost:8000/scrape"
+api_url = "http://localhost/scrape"
 
 
 data = {
